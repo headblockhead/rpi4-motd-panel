@@ -1,0 +1,36 @@
+package main
+
+templ page(content templ.Component) {
+	<!DOCTYPE html>
+	<html lang="en" style="color-scheme: light dark;">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>LCD Controller</title>
+		</head>
+		<body style="font-family: system-ui, sans-serif; display: flex; justify-content: center; align-items: center; flex-direction: column; height: 100vh; margin: 0;">
+			@content
+		</body>
+	</html>
+}
+
+templ success() {
+	<h1 style="font-size: 2rem; text-allign: center;"><code>200 OK</code></h1>
+	<a style="text-align: center;" href="/">Go back</a>
+}
+
+templ form() {
+	<h1 style="text-align: center; font-size: 2rem;">POST your message to my LCD!</h1>
+	<form method="post" action="/" style="text-align: center; margin-top: 2em;">
+		@formCSRF()
+		<input type="text" id="line1" name="line1" maxlength="16" style="font-family: monospace; font-size: 1.5rem; width: 16ch; margin-bottom: 0.5em; border-width: 2px;"/>
+		<br/>
+		<input type="text" id="line2" name="line2" maxlength="16" style="font-family: monospace; font-size: 1.5rem; width: 16ch; margin-bottom: 0.5em; border-width: 2px;"/>
+		<br/>
+		<input type="submit" value="Send to LCD" style="margin-top: 1em; font-size: 1.75rem;"/>
+	</form>
+}
+
+templ formCSRF() {
+	<input type="hidden" name="gorilla.csrf.Token" value={ ctx.Value("gorilla.csrf.Token").(string) }/>
+}
